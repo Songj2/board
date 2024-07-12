@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th=http://www.thymeleaf.org>
+<head>
+    <meta charset="UTF-8">
+    <title>BOARD LIST</title>
+</head>
+<body>
+<h1>BOARD LIST</h1>
+<button th:onclick="'location.href=\''+@{/user/login}+'\''">로그인</button>
+<div th:each="list : ${list}">
+    <a th:href="@{'/board/showOne/'+${list.id}}">
+        <span th:text="${list.id}"></span>
+        <span th:text="${list.title}"></span>
+<!--        <span th:text="${list.content}"></span>-->
+        <span th:text="${list.createdAt}"></span>
+        <span th:if="${list.updateAt} != null">[[${list.updateAt}]]</span>
+        <span th:text="${list.userId}"></span>
+        <span th:text="${list.name}"></span>
+    </a>
+</div>
+<div th:if="!${list.isEmpty()}">
+    <div class="pagination" th:with="pageNumber= ${list.pageable.pageNumber},
+    pageSize=${list.pageable.pageSize},
+    totalPages=${list.totalPages},
+    startPage=${T(java.lang.Math).floor(pageNumber/pageSize)*pageSize +1},
+    tempEndPage=${startPage + pageSize - 1},
+    endPage=(${tempEndPage< totalPages? tempEndPage: totalPages})">
+        <span th:classappend="${list.first}? 'disabled'" class="page-item">
+            <a class="page-link" th:href="${list.first} ? '#': @{/(page=0)}">
+                <span aria-hidden="true">&lt;&lt;</span>
+            </a>
+        </span>
+        <span th:classappend="${list.first}? 'disabled'" class="page-item">
+            <a class="page-link" th:href="${list.first} ? '#': @{/(page=${pageNumber -1})}">
+                <span aria-hidden="true">&lt;</span>
+            </a>
+        </span>
+        <span th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page== pageNumber+1} ? 'active'"class="page-item">
+            <a th:text="${page}" class="page-link" th:href="@{/(page=${page -1})}"></a>
+        </span>
+        <span th:classappend="${list.last}? 'disabled'" class="page-item">
+            <a th:classappend="page-line" th:href="${list.last} ? '#' : @{/(page=${pageNumber + 1})}" aria-label="Next">
+                <span aria-hidden="true">&gt;</span>
+            </a>
+        </span>
+        <span th:classappend="${list.last}? 'disabled'" class="page-item">
+            <a th:classappend="page-line" th:href="${list.last} ? '#' : @{/(page=${totalPages-1})}" aria-label="Next">
+                <span aria-hidden="true">&gt;&gt;</span>
+            </a>
+        </span>
+
+    </div>
+</div>
+</body>
+</html>

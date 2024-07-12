@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th=http://www.thymeleaf.org>
+<head>
+    <meta charset="UTF-8">
+    <title>Details</title>
+</head>
+<body>
+<h1>DETAILS</h1>
+No.<span th:text="${board.id}"></span>
+<h1>제목: [[${board.title}]]</h1>
+<h2>작성자: [[${board.name}]]</h2>
+<hr/>
+등록일: <span th:text="${board.createdAt}"></span>
+수정일: <span th:if="${board.updateAt!= null}">[[${board.updateAt}]]</span>
+<hr/>
+<div th:text="${board.content}"></div>
+</body>
+</html>
