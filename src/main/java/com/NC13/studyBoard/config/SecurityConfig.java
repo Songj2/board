@@ -18,8 +18,9 @@ UsersCustomService usersCustomService;
 @Bean
 public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
     httpSecurity.csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests((authorize)->
+            .authorizeHttpRequests(authorize->
                     authorize.requestMatchers("/", "/user/*","/login").permitAll()
+//                            .requestMatchers("/board/*").permitAll()
                             .anyRequest().authenticated()
             )
             .formLogin((formLogin)->
@@ -34,8 +35,8 @@ public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Excepti
     return httpSecurity.build();
 }
 
-//    @Bean
-//    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

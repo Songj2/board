@@ -18,6 +18,7 @@
         <span th:text="${list.name}"></span>
     </a>
 </div>
+
 <div th:if="!${list.isEmpty()}">
     <div class="pagination" th:with="pageNumber= ${list.pageable.pageNumber},
     pageSize=${list.pageable.pageSize},
