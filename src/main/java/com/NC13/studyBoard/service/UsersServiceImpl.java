@@ -20,7 +20,7 @@ public class UsersServiceImpl implements UsersService {
                 .email(insertUserRequest.getEmail())
                 .password(bCryptPasswordEncoder.encode(insertUserRequest.getPassword()))
                 .name(insertUserRequest.getName())
-                        .role(Role.USER)
+                .role(Role.USER)
                 .build()).getId();
     }
 }

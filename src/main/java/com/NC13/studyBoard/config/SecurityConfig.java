@@ -20,7 +20,6 @@ public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Excepti
     httpSecurity.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorize->
                     authorize.requestMatchers("/", "/user/*","/login").permitAll()
-//                            .requestMatchers("/board/*").permitAll()
                             .anyRequest().authenticated()
             )
             .formLogin((formLogin)->
