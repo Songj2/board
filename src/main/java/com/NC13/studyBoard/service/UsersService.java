@@ -1,7 +1,8 @@
 package com.NC13.studyBoard.service;
 
-import com.NC13.studyBoard.dto.UsersDTO;
+import com.NC13.studyBoard.dto.InsertUserRequest;
 
 public interface UsersService {
-    UsersDTO getUsers();
+    Long save(InsertUserRequest insertUserRequest);
+
 }

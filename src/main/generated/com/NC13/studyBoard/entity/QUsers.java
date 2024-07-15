@@ -29,7 +29,7 @@ public class QUsers extends EntityPathBase<Users> {
 
     public final StringPath password = createString("password");
 
-    public final StringPath role = createString("role");
+    public final EnumPath<com.NC13.studyBoard.enums.Role> role = createEnum("role", com.NC13.studyBoard.enums.Role.class);
 
     public final DateTimePath<java.time.LocalDateTime> updateAt = createDateTime("updateAt", java.time.LocalDateTime.class);
 

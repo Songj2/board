@@ -1,6 +1,9 @@
 package com.NC13.studyBoard.entity;
+import com.NC13.studyBoard.converter.RoleConverter;
+import com.NC13.studyBoard.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -22,7 +25,9 @@ public class Users {
     private String email;
     private String password;
     private String name;
-    private String role;
+
+    @Convert(converter = RoleConverter.class)
+    private Role role;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

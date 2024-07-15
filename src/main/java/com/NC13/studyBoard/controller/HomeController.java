@@ -3,6 +3,7 @@ package com.NC13.studyBoard.controller;
 import com.NC13.studyBoard.dto.BoardDTO;
 import com.NC13.studyBoard.service.BoardServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class HomeController {
 
     private final BoardServiceImpl boardService;
