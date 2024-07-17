@@ -1,6 +1,7 @@
 package com.NC13.studyBoard.controller;
 
 import com.NC13.studyBoard.dto.InsertUserRequest;
+import com.NC13.studyBoard.entity.Users;
 import com.NC13.studyBoard.service.UsersServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,13 +31,15 @@ public class UserController {
     @PostMapping("register")
     public String runRegister(InsertUserRequest request) {
         log.info("UserController의 경로를 탔다!");
-        usersService.save(request);
+        Users users = usersService.selectUser(request.getEmail());
+        log.debug("받음" + String.valueOf(users));
 
-        return "redirect:/";
+        if (users == null) {
+            usersService.save(request);
+            return "redirect:/";
+        }
+
+        return "redirect:/error";
     }
 
-    @GetMapping("auth/error")
-    public String showError(){
-        return "error";
-    }
 }

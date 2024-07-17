@@ -26,4 +26,8 @@ public class HomeController {
     }
 
 
+    @GetMapping("/error")
+    public String showError(){
+        return"error";
+    }
 }

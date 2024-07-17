@@ -23,7 +23,7 @@ public class BoardRepositoryTests {
 
     @BeforeEach
     public void makeUser() {
-        users = usersRepository.findById(1L).get();
+        users = usersRepository.findById(2L).get();
     }
 
     @Test
@@ -33,10 +33,10 @@ public class BoardRepositoryTests {
 
     @Test
     public void testInsert() {
-//        for (int i=0; i<300; i++){
+        for (int i=0; i<300; i++){
             Board board = Board.builder().title("test").content("test content ").users(users).build();
             boardRepository.save(board);
-//        }
+        }
 
     }
 

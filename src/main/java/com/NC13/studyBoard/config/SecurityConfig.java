@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 @Configuration
 @EnableWebSecurity
@@ -17,9 +18,12 @@ public class SecurityConfig {
 UsersCustomService usersCustomService;
 @Bean
 public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+    HttpSessionRequestCache requestCache= new HttpSessionRequestCache();
+    requestCache.setMatchingRequestParameterName(null);
     httpSecurity.csrf(AbstractHttpConfigurer::disable)
+            .requestCache(request -> request.requestCache(requestCache))
             .authorizeHttpRequests(authorize->
-                    authorize.requestMatchers("/", "/user/*","/login").permitAll()
+                    authorize.requestMatchers("/", "/user/*","/login", "/register", "/error").permitAll()
                             .anyRequest().authenticated()
             )
             .formLogin((formLogin)->
@@ -28,8 +32,9 @@ public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Excepti
                             .passwordParameter("password")
                             .defaultSuccessUrl("/")
                             .loginProcessingUrl("/user/auth")
-                            .failureUrl("/user/auth/error")
-            ).userDetailsService(usersCustomService);
+                            .failureUrl("/error")
+            )
+            .userDetailsService(usersCustomService);
 
     return httpSecurity.build();
 }

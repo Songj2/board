@@ -5,9 +5,13 @@ import com.NC13.studyBoard.entity.Users;
 import com.NC13.studyBoard.enums.Role;
 import com.NC13.studyBoard.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService {
@@ -22,5 +26,18 @@ public class UsersServiceImpl implements UsersService {
                 .name(insertUserRequest.getName())
                 .role(Role.USER)
                 .build()).getId();
+    }
+
+    @Override
+    public Users selectUser(String email) {
+        log.debug("UserServiceImpl: 들어옴");
+//        Users users= usersRepository.findEmailJoinFetchBoard(email);
+        List<Users> users= usersRepository.findByEmailUser(email);
+        if (users.isEmpty()){
+            log.debug("널을 반환");
+            return null;
+        }
+        log.debug("엔티티를 반환");
+        return users.get(0);
     }
 }
