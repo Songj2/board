@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 @Configuration
@@ -16,6 +17,8 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 public class SecurityConfig {
 @Autowired
 UsersCustomService usersCustomService;
+@Autowired
+private AuthenticationFailureHandler customFailureHandler;
 @Bean
 public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
     HttpSessionRequestCache requestCache= new HttpSessionRequestCache();
@@ -24,6 +27,7 @@ public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Excepti
             .requestCache(request -> request.requestCache(requestCache))
             .authorizeHttpRequests(authorize->
                     authorize.requestMatchers("/", "/user/*","/login", "/register", "/error").permitAll()
+                            .requestMatchers("favicon.ico").anonymous()
                             .anyRequest().authenticated()
             )
             .formLogin((formLogin)->
@@ -32,7 +36,8 @@ public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Excepti
                             .passwordParameter("password")
                             .defaultSuccessUrl("/")
                             .loginProcessingUrl("/user/auth")
-                            .failureUrl("/error")
+//                            .failureForwardUrl("/user/login")
+                            .failureHandler(customFailureHandler)
             )
             .userDetailsService(usersCustomService);
 
@@ -42,5 +47,10 @@ public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Excepti
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    AuthenticationFailureHandler customAuthFailureHandler(){
+    return new CustomFailureHandler();
     }
 }

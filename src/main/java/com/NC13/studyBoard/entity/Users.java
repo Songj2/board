@@ -1,6 +1,7 @@
 package com.NC13.studyBoard.entity;
 import com.NC13.studyBoard.converter.RoleConverter;
 import com.NC13.studyBoard.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,7 +14,6 @@ import java.util.List;
 
 @Entity
 @Table(name="users")
-@ToString
 @Data
 @Builder
 @Transactional
@@ -24,7 +24,9 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
+    @Column(name = "password", nullable = false)
     private String password;
     private String name;
 
@@ -36,6 +38,7 @@ public class Users {
     @UpdateTimestamp
     private LocalDateTime updateAt;
 
-    @OneToMany(mappedBy = "users")
-    private List<Board> boards= new ArrayList<>();
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "users")
+//    private List<Board> boards= new ArrayList<>();
 }

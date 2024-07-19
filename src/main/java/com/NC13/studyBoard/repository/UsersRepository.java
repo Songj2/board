@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UsersRepository extends JpaRepository<Users, Long> {
-    List<Users> findByEmail(String email);
+    Users findByEmail(String email);
 
-    @Query("select u from Users u join fetch u.boards where u.email=?1")
-    Users findEmailJoinFetchBoard(String email);
+//    @Query("select u from Users u join fetch u.boards where u.email=?1")
+//    Users findEmailJoinFetchBoard(String email);
     @Query("select u from Users u where u.email=?1")
-    List<Users> findByEmailUser(String email);
+    Users findByEmailUser(String email);
 }

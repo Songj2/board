@@ -1,5 +1,6 @@
 package com.NC13.studyBoard.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,7 +13,6 @@ import java.util.Date;
 
 @Entity
 @Table(name="board")
-@ToString
 @Data
 @Builder(toBuilder = true)
 @AllArgsConstructor
@@ -33,6 +33,7 @@ public class Board {
     @Column(name = "update_at")
     private LocalDateTime updateAt;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users users;

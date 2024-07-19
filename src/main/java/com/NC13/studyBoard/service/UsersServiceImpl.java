@@ -31,13 +31,23 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public Users selectUser(String email) {
         log.debug("UserServiceImpl: 들어옴");
-//        Users users= usersRepository.findEmailJoinFetchBoard(email);
-        List<Users> users= usersRepository.findByEmailUser(email);
-        if (users.isEmpty()){
+        Users users= usersRepository.findByEmailUser(email);
+        if (users== null){
             log.debug("널을 반환");
             return null;
         }
         log.debug("엔티티를 반환");
-        return users.get(0);
+        return users;
     }
+//    @Override
+//    public Users selectUser(String email) {
+//        log.debug("UserServiceImpl: 들어옴");
+//        Users users= usersRepository.findEmailJoinFetchBoard(email);
+//        if (users==null){
+//            log.debug("널을 반환");
+//            return null;
+//        }
+//        log.debug("엔티티를 반환");
+//        return users;
+//    }
 }

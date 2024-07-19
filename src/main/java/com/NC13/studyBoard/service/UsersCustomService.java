@@ -1,7 +1,6 @@
 package com.NC13.studyBoard.service;
 
 import com.NC13.studyBoard.entity.Users;
-import com.NC13.studyBoard.enums.Role;
 import com.NC13.studyBoard.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -23,18 +20,16 @@ public class UsersCustomService implements UserDetailsService {
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        List<Users> users= usersRepository.findByEmail(email);
-        if (users.isEmpty()) {
-            throw new UsernameNotFoundException(email);
+        Users users= usersRepository.findByEmail(email);
+        if (users==null) {
+            throw new UsernameNotFoundException("해당 사용자의 정보가 존재하지 않습니다.");
         }
-        Users usersEntity = users.get(0);
-        log.info("userCustomerService "+ usersEntity);
-        log.info("userCustomerService "+ usersEntity.getRole());
+        log.info("userCustomerService "+ users);
+        log.info("userCustomerService "+ users.getRole());
         return User.builder()
-                .username(usersEntity.getEmail())
-                .password(usersEntity.getPassword())
-//                .roles(String.valueOf(Role.USER))
-                .roles(usersEntity.getRole().name())
+                .username(users.getEmail())
+                .password(users.getPassword())
+                .roles(users.getRole().name())
                 .build();
     }
 }
