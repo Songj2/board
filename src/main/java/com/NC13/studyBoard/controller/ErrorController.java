@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @ControllerAdvice
@@ -16,7 +16,7 @@ public class ErrorController {
 
     @GetMapping("/error")
     @ExceptionHandler(Throwable.class)
-    public String exception(Model model, HttpServletRequest request) {
+    public String exception(Model model, @RequestParam() HttpServletRequest request) {
         log.debug("에러 컨트롤러 진입");
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         String statusMessage = status.toString();

@@ -3,8 +3,8 @@ package com.NC13.studyBoard.dto;
 import lombok.Data;
 
 @Data
-public class LoginUserResponse {
+public class UserInsertRequest {
     private String email;
     private String password;
-    private String role;
+    private String name;
 }

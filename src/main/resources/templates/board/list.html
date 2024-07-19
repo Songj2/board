@@ -12,7 +12,8 @@
 <body>
 <header th:replace="~{fragments :: headerFragment}"></header>
 <h1>BOARD LIST</h1>
-<table class="table">
+<div class="d-flex justify-content-center">
+<table class="table w-75">
     <thead>
     <tr>
         <th>#</th>
@@ -28,6 +29,7 @@
             <td th:text="${list.name}"></td>
     </tr>
 </table>
+</div>
 <div th:unless="${list.isEmpty()}" class="d-flex justify-content-center">
     <ul class="pagination" th:with="pageNumber= ${list.pageable.pageNumber},
     pageSize=${list.pageable.pageSize},

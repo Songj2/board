@@ -1,6 +1,6 @@
 package com.NC13.studyBoard.service;
 
-import com.NC13.studyBoard.dto.InsertUserRequest;
+import com.NC13.studyBoard.dto.UserInsertRequest;
 import com.NC13.studyBoard.entity.Users;
 import com.NC13.studyBoard.enums.Role;
 import com.NC13.studyBoard.repository.UsersRepository;
@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -19,7 +17,7 @@ public class UsersServiceImpl implements UsersService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public Long save(InsertUserRequest insertUserRequest) {
+    public Long save(UserInsertRequest insertUserRequest) {
         return usersRepository.save(Users.builder()
                 .email(insertUserRequest.getEmail())
                 .password(bCryptPasswordEncoder.encode(insertUserRequest.getPassword()))

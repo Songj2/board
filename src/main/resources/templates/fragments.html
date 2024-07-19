@@ -16,6 +16,7 @@
         </button>
         <th:block sec:authorize="isAuthenticated()">
             <span th:text="${login.getName()}+'님 로그인 되었습니다.'" class="fs-5"></span>
+            <button th:onclick="'location.href=\''+@{/board/write}+'\''" class="btn btn-outline-warning">작성하기</button>
             <button th:onclick="'location.href=\''+@{/user/logout}+'\''" class="btn btn-outline-warning">로그아웃</button>
         </th:block>
         <a th:href="'javascript'+':'+'history.go(-1)'" class="btn">뒤로가기</a>

@@ -1,6 +1,6 @@
 package com.NC13.studyBoard.controller;
 
-import com.NC13.studyBoard.dto.InsertUserRequest;
+import com.NC13.studyBoard.dto.UserInsertRequest;
 import com.NC13.studyBoard.entity.Users;
 import com.NC13.studyBoard.service.UsersServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,8 +38,8 @@ public class UserController {
     }
 
     @PostMapping("register")
-    public String runRegister(InsertUserRequest request) {
-        log.info("UserController의 경로를 탔다!");
+    public String runRegister(UserInsertRequest request) {
+        log.info("UserController의 경로를 탔다!"+request);
         Users users = usersService.selectUser(request.getEmail());
         log.debug("받음" + String.valueOf(users));
 
