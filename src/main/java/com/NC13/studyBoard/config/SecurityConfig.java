@@ -26,7 +26,7 @@ public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Excepti
     httpSecurity.csrf(AbstractHttpConfigurer::disable)
             .requestCache(request -> request.requestCache(requestCache))
             .authorizeHttpRequests(authorize->
-                    authorize.requestMatchers("/", "/user/*","/login", "/register", "/error").permitAll()
+                    authorize.requestMatchers("/", "/user/*","/login", "/register", "/error", "/js/**").permitAll()
                             .requestMatchers("favicon.ico").anonymous()
                             .anyRequest().authenticated()
             )
@@ -36,7 +36,6 @@ public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Excepti
                             .passwordParameter("password")
                             .defaultSuccessUrl("/")
                             .loginProcessingUrl("/user/auth")
-//                            .failureForwardUrl("/user/login")
                             .failureHandler(customFailureHandler)
             )
             .userDetailsService(usersCustomService);
