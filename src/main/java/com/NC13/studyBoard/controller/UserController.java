@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
     private final UsersServiceImpl usersService;
 
-    @GetMapping("login")
+//    @GetMapping("login")
     public String showLogin(Model model, @RequestParam(value = "error", required = false) String error, @RequestParam(value = "exception", required = false) String exception) {
         log.debug(error+"에러와 익셉션"+ exception);
         model.addAttribute("error", error);
@@ -46,7 +46,7 @@ public class UserController {
 //        throw new DataIntegrityViolationException("'" + request.getEmail() + "'는 이미 가입된 이메일입니다.");
 //    }
 
-    @GetMapping("/logout")
+//    @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
         return "redirect:/user/login";

@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService {
     private final UsersRepository usersRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public Long save(UserInsertRequest insertUserRequest) {
         return usersRepository.save(Users.builder()
                 .email(insertUserRequest.getEmail())
-                .password(bCryptPasswordEncoder.encode(insertUserRequest.getPassword()))
+//                .password(bCryptPasswordEncoder.encode(insertUserRequest.getPassword()))
                 .name(insertUserRequest.getName())
                 .role(Role.USER)
                 .build()).getId();

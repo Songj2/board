@@ -6,6 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
+
 </head>
 <body>
 <header th:fragment="headerFragment">
@@ -17,7 +18,9 @@
         <th:block sec:authorize="isAuthenticated()">
             <span th:text="${login.getName()}+'님 로그인 되었습니다.'" class="fs-5"></span>
             <button th:onclick="'location.href=\''+@{/board/write}+'\''" class="btn btn-outline-warning">작성하기</button>
-            <button th:onclick="'location.href=\''+@{/user/logout}+'\''" class="btn btn-outline-warning">로그아웃</button>
+<!--            <button th:onclick="'location.href=\''+@{/user/logout}+'\''" class="btn btn-outline-warning">로그아웃</button>-->
+            <button th:onclick="logout()" class="btn btn-outline-warning">로그아웃</button>
+            <script type="text/javascript" th:src="@{/js/logout.js}"></script>
         </th:block>
         <a th:href="'javascript'+':'+'history.go(-1)'" class="btn">뒤로가기</a>
     </div>
