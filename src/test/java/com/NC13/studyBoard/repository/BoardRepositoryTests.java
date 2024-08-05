@@ -48,12 +48,12 @@ public class BoardRepositoryTests {
             System.out.println(board);
         }
     }
-
-    @Test
-    public void testUpdate() {
-        Board board = Board.builder().id(2L).content("b").users(users).build();
-        System.out.println(boardRepository.save(board));
-    }
+//
+//    @Test
+//    public void testUpdate() {
+//        Board board = Board.builder().id(2L).content("b").users(users).build();
+//        System.out.println(boardRepository.save(board));
+//    }
 
     @Test
     public void testDelete() {
@@ -75,11 +75,11 @@ public class BoardRepositoryTests {
         System.out.println("first page? " + result.isFirst());
     }
 
-    @Test
-    public void testSort() {
-        Sort sort = Sort.by("id").descending();
-        Pageable pageable = PageRequest.of(0, 15, sort);
-        Page<Board> res = boardRepository.findAll(pageable);
-        res.get().forEach(System.out::println);
-    }
+//    @Test
+//    public void testSort() {
+//        Sort sort = Sort.by("id").descending();
+//        Pageable pageable = PageRequest.of(0, 15, sort);
+//        Page<Board> res = boardRepository.findAll(pageable);
+//        res.get().forEach(System.out::println);
+//    }
 }

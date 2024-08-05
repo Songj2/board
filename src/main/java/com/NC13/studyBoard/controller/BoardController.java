@@ -2,11 +2,13 @@ package com.NC13.studyBoard.controller;
 
 import com.NC13.studyBoard.dto.BoardDTO;
 import com.NC13.studyBoard.dto.BoardInsertRequest;
+import com.NC13.studyBoard.dto.CommentDTO;
 import com.NC13.studyBoard.dto.UsersDTO;
 import com.NC13.studyBoard.entity.Board;
 import com.NC13.studyBoard.entity.Users;
 import com.NC13.studyBoard.repository.BoardRepository;
 import com.NC13.studyBoard.service.BoardService;
+import com.NC13.studyBoard.service.CommentServiceImpl;
 import com.NC13.studyBoard.service.UsersServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Slf4j
 @Controller
 @RequestMapping("/board/")
@@ -28,15 +32,18 @@ public class BoardController {
     private final BoardService boardService;
     private final UsersServiceImpl usersService;
     private final BoardRepository boardRepository;
+    private final CommentServiceImpl commentService;
 
     @GetMapping("showOne/{id}")
     public String showOne(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal User user) {
-        BoardDTO boardDTO = boardService.getOne(id);
-        model.addAttribute("board", boardDTO);
-
         log.debug("로그인 정보: " + user);
+
         if (user != null) {
-            log.debug("user가 null이 아니다!" + user.getUsername());
+            BoardDTO boardDTO = boardService.getOne(id);
+            model.addAttribute("board", boardDTO);
+            List<CommentDTO> list= commentService.getCommentsList(boardRepository.findById(id).get());
+            log.debug("댓글!"+list.size());
+            model.addAttribute("comments", list);
             Users users = usersService.selectUser(user.getUsername());
             UsersDTO usersDTO = UsersDTO.builder()
                     .email(users.getEmail())

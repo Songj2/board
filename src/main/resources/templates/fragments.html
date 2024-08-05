@@ -28,5 +28,43 @@
         <a th:href="'javascript'+':'+'history.go(-1)'" class="btn">뒤로가기</a>
     </div>
 </nav>
+
+<div th:fragment="addComment" class="my-3">
+    <form th:action="@{/comment/insert}" method="post">
+        <div class="form-floating ">
+            <textarea class="form-control" name="content" id="content" placeholder="댓글달기"></textarea>
+            <label class="form-label" for="content">댓글</label>
+        </div>
+        <input th:value="${board.id}" name="boardId" hidden="hidden">
+        <button type="submit" class="btn btn-primary">댓글달기</button>
+    </form>
+</div>
+<div th:fragment="addCoComment" class="my-3" th:id="|addCoComment${comment.id}|" style="display: none;">
+    <form th:action="@{/comment/insert}" method="post">
+        <div class="form-floating ">
+            <textarea class="form-control" name="content" id="coContent" placeholder="댓글달기"></textarea>
+            <label class="form-label" for="coContent">대댓글</label>
+        </div>
+        <input th:value="${comment.id}" name="parentId" hidden="hidden">
+        <input th:value="${board.id}" name="boardId" hidden="hidden">
+        <button type="submit" class="btn btn-primary">대댓글달기</button>
+    </form>
+</div>
+
+<div th:fragment="showComment" class="mb-3">
+    <div class="d-flex" style="min-width: 99vw">
+        <th:block th:if="${comment.depth}>0" th:each="num:${#numbers.sequence(1,comment.depth)}">
+            <span style="width: 10px; height: 10px; background-color: darkslateblue; display: inline-block;"></span>
+        </th:block>
+        <div class="border rounded py-3 px-2">
+            <div th:text="${comment.content}"></div>
+            <div>
+                <span th:text="| -w.${comment.name}|"></span>
+                <button th:unless="${comment.depth}>=99" class="btn btn-outline-primary" th:id="|addCommentBtn${comment.id}|" th:onclick="|showAdded(${comment.id})|">댓글달기</button>
+                <div  th:replace="~{fragments :: addCoComment}"></div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

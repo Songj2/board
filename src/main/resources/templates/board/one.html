@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 </head>
 <body>
 <header th:replace="~{fragments :: headerFragment}"></header>
@@ -27,6 +28,17 @@
         </div>
     </div>
 </div>
-<div></div>
+
+<div class=" justify-content-center d-flex">
+    <div>
+        <div th:replace="~{fragments :: addComment}"></div>
+        <div style="overflow-x: auto">
+            <th:block th:each="comment:${comments}">
+                <div th:replace="~{fragments :: showComment}"></div>
+            </th:block>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/js/comments.js}"></script>
 </body>
 </html>
